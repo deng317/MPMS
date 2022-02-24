@@ -1,0 +1,260 @@
+{% extends "general_layout.html" %}
+{% block content %}
+    <div class="content-section" xmlns="http://www.w3.org/1999/html">
+
+        <!--- action="" --->
+        <form class="" method="POST" ,action="" novalidate>
+            {# 攻击防护 #}
+            {{ form.hidden_tag() }}
+            {#            fieldset 开始写表格正文部分   #}
+            <fieldset class="form-group">
+                <legend class="border-bottom mk-4">添加专案明细</legend>
+
+                <h3 class="row">
+                    <input type="text" readonly class="form-control-plaintext" id="case_name"
+                           value="{{ case.case_name }}">
+                </h3>
+                <div class="row g-3">
+                    <div class="table-label col-sm-2">厂商名称</div>
+                    <div class="table-body col-sm-4">{{ vendor.name }}</div>
+                    <div class="table-label col-sm-2">厂商代码</div>
+                    <div class="table-body col-sm-4">{{ vendor.vendor_code }}</div>
+                </div>
+
+                <div class="row g-3">
+                    <div class="table-label col-2">
+                        {{ form.process_section.label }}
+                    </div>
+                    {% if form.process_section.errors %}
+                        <div class="table-body col-4">
+                            {{ form.process_section(class="form-control form-control-sm is-invalid") }}
+                        </div>
+                        <div class="invalid-feedback">
+                            {% for error in form.process_section.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <div class="col table-body col-sm-4">
+                            {{ form.process_section(class='form-control form-control-sm') }}
+                        </div>
+                    {% endif %}
+
+                    <div class="table-label col-sm-2">
+                        {{ form.EQ_name.label(class='form-control-label') }}
+                    </div>
+                    {% if form.EQ_name.errors %}
+                        <div class="table-body col-sm-4">
+                            {{ form.EQ_name(class = "form-control form-control-sm is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.EQ_name.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="col table-body col-sm-4">
+                            {{ form.EQ_name(class='form-control form-control-sm') }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="row g-3">
+                    <div class="table-label col-2">
+                        {{ form.EQ_type.label(class='form-control-label') }}
+                    </div>
+                    {% if form.EQ_type.errors %}
+                        <div class="table-body col-sm-4">
+                            {{ form.EQ_type(class="form-control form-control-sm is-invalid") }}
+
+                            <div class="invalid-feedback">
+                                {% for error in form.EQ_type.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="col table-body col-sm-4">
+                            {{ form.EQ_type(class='form-control form-control-sm') }}
+                        </div>
+                    {% endif %}
+
+                    <div class="table-label col-sm-2">
+                        {{ form.contract_code.label(class='form-control-label') }}
+                    </div>
+                    {% if form.contract_code.errors %}
+                        <div class="table-body col-sm-4">
+                            {{ form.contract_code(class = "form-control form-control-sm is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.contract_code.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="col table-body col-sm-4">
+                            {{ form.contract_code(class='form-control form-control-sm') }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="row g-3">
+                    <div class="table-label col-2">
+                        {{ form.price.label }}
+                    </div>
+                    {% if form.price.errors %}
+                        <div class="table-body col-4">
+                            {{ form.price(class="form-control form-control-sm is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.price.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="col table-body col-sm-4">
+                            {{ form.price(class='form-control form-control-sm') }}
+                        </div>
+                    {% endif %}
+
+                    <div class="table-label col-sm-2">
+                        {{ form.currency_unit.label(class='form-control-label') }}
+                    </div>
+                    {% if form.currency_unit.errors %}
+                        <div class="table-body col-sm-4">
+                            {{ form.currency_unit(class = "form-control form-control-sm is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.currency_unit.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="col table-body col-sm-4">
+                            {{ form.currency_unit(class='form-control form-control-sm') }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="row g-3">
+                    <div class="table-label col-2">
+                        {{ form.quantity.label }}
+                    </div>
+                    {% if form.quantity.errors %}
+                        <div class="table-body col-4">
+                            {{ form.quantity(class="form-control form-control-sm is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.quantity.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="col table-body col-sm-4">
+                            {{ form.quantity(class='form-control form-control-sm') }}
+                        </div>
+                    {% endif %}
+
+                    <div class="table-label col-sm-2">
+                        {{ form.pay_after_contact.label(class='form-control-label') }}
+                    </div>
+                    {% if form.pay_after_contact.errors %}
+                        <div class="table-body col-sm-4">
+                            {{ form.pay_after_contact(class = "form-control form-control-sm is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.pay_after_contact.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="col table-body col-sm-4">
+                            {{ form.pay_after_contact(class='form-control form-control-sm') }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="row g-3">
+                    <div class="table-label col-2">
+                        {{ form.pay_before_deliver.label }}
+                    </div>
+                    {% if form.pay_before_deliver.errors %}
+                        <div class="table-body col-4">
+                            {{ form.pay_before_deliver(class="form-control form-control-sm is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.pay_before_deliver.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="col table-body col-sm-4">
+                            {{ form.pay_before_deliver(class='form-control form-control-sm') }}
+                        </div>
+                    {% endif %}
+
+                    <div class="table-label col-sm-2">
+                        {{ form.pay_after_setup.label(class='form-control-label') }}
+                    </div>
+                    {% if form.pay_after_setup.errors %}
+                        <div class="table-body col-sm-4">
+                            {{ form.pay_after_setup(class = "form-control form-control-sm is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.pay_after_setup.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="col table-body col-sm-4">
+                            {{ form.pay_after_setup(class='form-control form-control-sm') }}
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="row g-3">
+                    <div class="table-label col-2">
+                        {{ form.pay_after_recieve.label }}
+                    </div>
+                    {% if form.pay_after_recieve.errors %}
+                        <div class="table-body col-4">
+                            {{ form.pay_after_recieve(class="form-control form-control-sm is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.pay_after_recieve.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="col table-body col-sm-4">
+                            {{ form.pay_after_recieve(class='form-control form-control-sm') }}
+                        </div>
+                    {% endif %}
+
+                    <div class="table-label col-sm-2">
+                        {{ form.pay_time_after_recieve.label(class='form-control-label') }}
+                    </div>
+                    {% if form.pay_time_after_recieve.errors %}
+                        <div class="table-body col-sm-4">
+                            {{ form.pay_time_after_recieve(class = "form-control form-control-sm is-invalid") }}
+                            <div class="invalid-feedback">
+                                {% for error in form.pay_time_after_recieve.errors %}
+                                    <span>{{ error }}</span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="col table-body col-sm-4">
+                            {{ form.pay_time_after_recieve(class='form-control form-control-sm') }}
+                        </div>
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class='btn btn-outline-info ml-2') }}
+                <a href="{{ url_for('index') }}" class="btn btn-outline-secondary mr-1">返回</a>
+            </div>
+        </form>
+
+    </div>
+{% endblock %}

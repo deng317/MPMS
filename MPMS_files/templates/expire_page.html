@@ -1,0 +1,6 @@
+{% extends "general_layout.html" %}
+{% block content %}
+    <div class="content-section">
+    <p>您的验证信息有效时间10分钟，已过期，请<a href="{{ url_for('request_reset') }}">点这里</a>重新发送</p>
+    </div>
+{% endblock %}

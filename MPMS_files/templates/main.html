@@ -1,0 +1,56 @@
+{% extends "general_layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <legend class="border-bottom mk-4">
+            <span>专案列表</span>
+            <span class="mr-2">
+            <a href="{{ url_for('query_guest') }}" class="btn btn-outline-info">创建新专案</a>
+        </span>
+        </legend>
+        <table class="table-light table-hover table-striped">
+            <thead>
+            <tr class="table-heading">
+                <th class="col-sm-1" scope="col"></th>
+                <th class="col-sm-2" scope="col">专案名称</th>
+                <th class="col-sm-2" scope="col">客户</th>
+                <th class="col-sm-2" scope="col">交付地点</th>
+                <th class="col-sm-1.5" scope="col">开案时间</th>
+                <th class="col-sm-1.5" scope="col">预计结案时间</th>
+                <th class="col-sm-2" scope="col">合同编号</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for case in cases.items %}
+
+                <tr class="table">
+                    {% if case.author.group == 'Comshare' %}
+                        <th scope="row"><img class="rounded-circle logo-img "
+                                             src="{{ url_for('static',filename='company_logos/Comshare.jpg') }}"></th>
+                    {% elif case.author.group == 'CH' %}
+                        <th scope="row"><img class="rounded-circle logo-img "
+                                             src="{{ url_for('static',filename='company_logos/CH.jpg') }}"></th>
+                    {% endif %}
+                    <th scope="row"><a href="{{ url_for('casedetail',case_id=case.id) }}">{{ case.case_name }}</a> </th>
+                    <td>{{ case.company_title.guest_name }}</td>
+                    <td>{{ case.address }}</td>
+                    <td>{{ case.start_date.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ case.want_end_date.strftime('%Y-%m-%d') }}</td>
+                    <td>{{ case.contract_code }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% for page_num in cases.iter_pages(left_edge=1,right_edge=1,left_current=1,right_current=2) %}
+        {% if page_num %}
+            {% if page_num == cases.page %}
+                <a class="btn btn-info mb-3" href="{{ url_for('index',page=page_num) }}">{{ page_num }}</a>
+            {% else %}
+                <a class="btn btn-outline-info mb-3" href="{{ url_for('index',page=page_num) }}">{{ page_num }}</a>
+            {% endif %}
+        {% else %}
+            ...
+        {% endif %}
+    {% endfor %}
+
+{% endblock %}

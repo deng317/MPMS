@@ -1,0 +1,80 @@
+{% extends "general_layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <legend class="border-bottom mk-4">
+            <span>专案列表</span>
+            <span class="mr-2">
+            <a href="{{ url_for('query_vendor', case_id=case.id) }}" class="btn btn-outline-info">添加专案内容</a>
+        </span>
+        </legend>
+        <table class="table-light table-hover table-striped">
+            <thead>
+            <tr class="table-heading">
+                <th class="col-sm-2" scope="col">厂商</th>
+                <th class="col-sm-2" scope="col">设备名称</th>
+                <th class="col-sm-2" scope="col">型号</th>
+                <th class="col-sm-2" scope="col">数量</th>
+                <th class="col-sm-2" scope="col">合同编号</th>
+                <th class="col-sm-2" scope="col">备注</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for detail in case_details.items %}
+
+                <tr class="table">
+
+                    <th scope="row">{{ detail.vendor.name }}</th>
+                    <td>{{ detail.EQ_name }}</td>
+                    <td>{{ detail.EQ_type }}</td>
+                    <td>{{ detail.quantity }}</td>
+                    <td>{{ detail.contract_code }}</td>
+                    <td>
+                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
+                                data-bs-target="#deleteModal{{ detail.id }}">删除
+                        </button>
+                    </td>
+                </tr>
+
+                {#Modral for Detete#}
+                <div class="modal fade" id="deleteModal{{ detail.id }}" data-bs-backdrop="static"
+                     data-bs-keyboard="false"
+                     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">删除确认</h5>
+                                <button type="button" class="btn btn-link" data-bs-dismiss="modal">关闭</button>
+                            </div>
+                            <div class="modal-body">
+                                <p class="alert-content">你正在删除专案{{ case.case_name }}的明细{{ detail.EQ_name }},
+                                    <br>
+                                    确定要删除吗？
+                                </p>
+                            </div>
+                            <div class="modal-footer">
+                                <a class="btn btn-outline-danger"
+                                   href="{{ url_for('delete_case_detail',case_id= case.id ,case_detail_id = detail.id) }}">确定删除</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% for page_num in case_details.iter_pages(left_edge=1,right_edge=1,left_current=1,right_current=2) %}
+        {% if page_num %}
+            {% if page_num==page %}
+                <a class="btn btn-info"
+                   href="{{ url_for('casedetail',page=page_num,case_id=case.id) }}">{{ page_num }}</a>
+            {% else %}
+                <a class="btn btn-outline-info"
+                   href="{{ url_for('casedetail',page=page_num,case_id=case.id) }}">{{ page_num }}</a>
+            {% endif %}
+        {% else %}
+            ...
+        {% endif %}
+    {% endfor %}
+
+
+{% endblock %}

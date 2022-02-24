@@ -1,0 +1,108 @@
+{% extends "general_layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <!--- action="" --->
+
+
+        <form method="POST" ,action="/create_guest/" novalidate>
+            {# 攻击防护 #}
+            {{ form.hidden_tag() }}
+            {#            fieldset 开始写表格正文部分   #}
+            <fieldset class="form-group">
+                <legend class="border-bottom mk-4">创建新专案</legend>
+                <div class="article-content">
+                    客户名称：{{ guest.guest_name }}
+                </div>
+                <div class="article-content">
+                    客户代码：{{ guest.guest_code }}
+                </div>
+                <br>
+                <div class="for-group">
+                    {{ form.case_name.label(class= 'form-control-label') }}
+                    {% if form.case_name.errors %}
+                        {{ form.case_name(class='form-control form-control-lg is-invalid') }}
+                        <div class="invalid-feedback">
+                            {% for error in form.case_name.errors %}
+                                <span>
+                                    {{ error }}
+                                </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.case_name(class='form-control form-control-lg') }}
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.address.label(class='form-control-label') }}
+                    {% if form.address.errors %}
+                        {{ form.address(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.address.errors %}
+                                <span>
+                                    {{ error }}
+                                </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.address(class='form-control form-control-lg') }}
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.start_date.label(class='form-control-label') }}
+                    {% if form.start_date.errors %}
+                        {{ form.start_date(class="form-control form-control-lg is-invalid",type='date') }}
+                        <div class="invalid-feedback">
+                            {% for error in form.start_date.errors %}
+                                <span>
+                                    {{ error }}
+                                </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.start_date(class='form-control form-control-lg',type='date') }}
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.want_end_date.label(class='form-control-label') }}
+                    {% if form.want_end_date.errors %}
+                        {{ form.want_end_date(class="form-control form-control-lg is-invalid",type='date') }}
+                        <div class="invalid-feedback">
+                            {% for error in form.want_end_date.errors %}
+                                <span>
+                                    {{ error }}
+                                </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.want_end_date(class='form-control form-control-lg',type='date') }}
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.contract_code.label(class='form-control-label') }}
+                    {% if form.contract_code.errors %}
+                        {{ form.contract_code(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.contract_code.errors %}
+                                <span>
+                                    {{ error }}
+                                </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.contract_code(class='form-control form-control-lg') }}
+                    {% endif %}
+                </div>
+
+
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class='btn btn-outline-info ml-2') }}
+            </div>
+        </form>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,74 @@
+{% extends "general_layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <legend class="border-bottom mk-4">
+            <span>供应商列表</span>
+            <span class="mr-2">
+            <a href="{{ url_for('create_vendor') }}" class="btn btn-outline-info">添加供应商档案</a>
+        </span>
+        </legend>
+        <table class="table-light table-hover table-striped">
+            <thead>
+            <tr class="table-heading">
+                <th class="col-sm-2" scope="col">厂商名称</th>
+                <th class="col-sm-2" scope="col">厂商代码</th>
+                <th class="col-sm-2" scope="col">厂商地址</th>
+                <th class="col-sm-2" scope="col">编辑档案</th>
+                <th class="col-sm-2" scope="col">删除</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for vendor in vendors.items %}
+                <tr class="table">
+                    <th scope="row">{{ vendor.name }}</th>
+                    <td>{{ vendor.vendor_code }}</td>
+                    <td>{{ vendor.address }}</td>
+                    <td><a href="{{ url_for("update_vendor",vendor_id = vendor.id) }}" class="btn btn-success btn-sm">编辑档案</a>
+                    </td>
+                    <td>
+                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal"
+                                data-bs-target="#deletevendorModal{{ vendor.id }}">删除
+                        </button>
+                    </td>
+
+                </tr>
+                {#Modral for Detete#}
+                <div class="modal fade" id="deletevendorModal{{ vendor.id }}" data-bs-backdrop="static"
+                     data-bs-keyboard="false"
+                     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">删除确认</h5>
+                                <button type="button" class="btn btn-link" data-bs-dismiss="modal">Close</button>
+                            </div>
+                            <div class="modal-body">
+                                <p class="alert-content">你正在删除供应商【{{ vendor.name }}】的资料,
+                                    <br>确定要删除吗？</p>
+                            </div>
+                            <div class="modal-footer">
+                                <form action="{{ url_for('delete_vendor',vendor_id = vendor.id) }}" method="post">
+                                    <input class="btn btn-outline-secondary" value="删除" type="submit">
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% if vendors.pages != 1 %}
+        {% for page_num in vendors.iter_pages(left_edge=1,right_edge=1,left_current=1,right_current=2) %}
+            {% if page_num %}
+                {% if page_num == vendors.page %}
+                    <a class="btn btn-info mb-3" href="{{ url_for('vendor',page=page_num) }}">{{ page_num }}</a>
+                {% else %}
+                    <a class="btn btn-outline-info mb-3" href="{{ url_for('vendor',page=page_num) }}">{{ page_num }}</a>
+                {% endif %}
+            {% else %}
+                ...
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+{% endblock %}

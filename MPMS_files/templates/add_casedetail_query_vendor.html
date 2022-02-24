@@ -1,0 +1,62 @@
+{% extends "general_layout.html" %}
+{% block content %}
+    <div class="content-section" xmlns="http://www.w3.org/1999/html">
+
+        <!--- action="" --->
+        <form method="POST" ,action="{{ url_for('query_vendor', case_id = case.id) }}" novalidate>
+            {# 攻击防护 #}
+            {{ form_query_vendor.hidden_tag() }}
+            {#            fieldset 开始写表格正文部分   #}
+            <fieldset class="form-group">
+                <legend class="border-bottom mk-4">添加专案明细</legend>
+                <div class="article-content">
+                    专案名称：{{ case.case_name }}
+                </div>
+                <br>
+                <div class="form-group">
+                    <label for="guest_name" class="form-control-label">供应商名称</label>
+                    {% if form_query_vendor.guest_name.errors %}
+                        {{ form_query_vendor.guest_name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form_query_vendor.guest_name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form_query_vendor.guest_name(class='form-control form-control-lg') }}
+                    {% endif %}
+                    {{ form_query_vendor.submit_query(class='btn btn-outline-info') }}
+                </div>
+            </fieldset>
+        </form>
+
+        {% if vendors %}
+            <table class="table-light table-hover table-striped">
+                <thead>
+                <tr class="table-heading">
+                    <th class="col-sm-1" scope="col">厂商名称</th>
+                    <th class="col-sm-2" scope="col">厂商代码</th>
+                    <th class="col-sm-2" scope="col">备注</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for vendor in vendors %}
+                    <tr class="table">
+                        <th scope="row">{{ vendor.name }}</th>
+                        <td>{{ vendor.vendor_code }}</td>
+                        <td>
+                            <div>
+                                <form method="get"
+                                      action="{{ url_for('add_casedetail',case_id=case.id,vendor_id=vendor.id) }}"
+                                      name="form-{{ vendor.id }}">
+                                    <input class="btn btn-outline-info" type="submit" value="选择">
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+{% endblock %}

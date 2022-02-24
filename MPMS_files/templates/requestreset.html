@@ -1,0 +1,40 @@
+{% extends "general_layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <!--- action="" --->
+        <form method="POST" ,action="" novalidate>
+            {# 攻击防护 #}
+            {{ form.hidden_tag() }}
+            {#            fieldset 开始写表格正文部分   #}
+            <fieldset class="form-group">
+                <legend class="border-bottom mk-4">找回密码</legend>
+                <div class="form-group">
+                    {{ form.email.label(class='form-control-label') }}
+                    {% if form.email.errors %}
+                        {{ form.email(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.email.errors %}
+                                <span>
+                                    {{ error }}
+                                </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.email(class='form-control form-control-lg') }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.submit(class='btn btn-outline-info ml-2') }}
+                </div>
+            </fieldset>
+        </form>
+        <small class="text-muted ml-2">
+            <a href="#">忘记密码？点我找回</a>
+        </small>
+    </div>
+    <div class="border-top pt-3">
+        <small class="text-muted">
+            没有账户？<a class="ml-2" href={{ url_for('register') }}>点我注册</a>
+        </small>
+    </div>
+{% endblock %}

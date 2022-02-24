@@ -1,0 +1,79 @@
+{% extends "general_layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <!--- action="" --->
+        <form method="POST" ,action="" novalidate>
+            {# 攻击防护 #}
+            {{ form.hidden_tag() }}
+            {#            fieldset 开始写表格正文部分   #}
+            <fieldset class="form-group">
+                <legend class="border-bottom mk-4">查询客户信息
+                    <a class="btn btn-outline-secondary" href="{{ url_for('create_guest') }}">创建客户档案</a>
+                </legend>
+
+                <div class="for-group">
+                    {{ form.guest_name.label(class= 'form-control-label') }}
+                    {% if form.guest_name.errors %}
+                        {{ form.guest_name(class='form-control form-control-lg is-invalid') }}
+                        <div class="invalid-feedback">
+                            {% for error in form.guest_name.errors %}
+                                <span>
+                                    {{ error }}
+                                </span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.guest_name(class='form-control form-control-lg') }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit_query(class='btn btn-outline-info ml-2') }}
+            </div>
+        </form>
+    </div>
+    <div class="container">
+        <table class="table-light table-hover table-striped">
+            <thead>
+            <tr class="table-heading">
+                <th class="col-sm-4" scope="col">客户名称</th>
+                <th class="col-sm-2" scope="col">客户代码</th>
+                <th class="col-sm-2" scope="col">详情</th>
+                <th class="col-sm-2" scope="col">编辑</th>
+                <th class="col-sm-2" scope="col">增加联系人</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for guest in guests.items %}
+                <tr class="table">
+                    <th scope="row">{{ guest.guest_name }}</th>
+                    <td>{{ guest.guest_code }}</td>
+                    <td>
+                        <a class="btn btn-success btn-sm" href="{{ url_for('guest_detail',guest_id=guest.id) }}">详情</a>
+                    </td>
+                    <td>
+                        <a class="btn btn-outline-success btn-sm"
+                           href="{{ url_for('update_guest',guest_id=guest.id) }}">编辑</a>
+                    </td>
+
+                    <td>
+                        <a class="btn btn-outline-info btn-sm"
+                           href="{{ url_for('add_guest_contact',guest_id=guest.id) }}">增加联系人</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% for page_num in guests.iter_pages(left_edge=1,right_edge=1,left_current=1,right_current=2) %}
+        {% if page_num %}
+            {% if page_num == guests.page %}
+                <a class="btn btn-info mb-3" href="{{ url_for('guest',page=page_num) }}">{{ page_num }}</a>
+            {% else %}
+                <a class="btn btn-outline-info mb-3" href="{{ url_for('guest',page=page_num) }}">{{ page_num }}</a>
+            {% endif %}
+        {% else %}
+            ...
+        {% endif %}
+    {% endfor %}
+{% endblock %}

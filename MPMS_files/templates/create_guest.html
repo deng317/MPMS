@@ -1,0 +1,61 @@
+{% extends "general_layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <!--- action="" --->
+        <form method="POST" ,action="" novalidate>
+            {# 攻击防护 #}
+            {{ form.hidden_tag() }}
+            {#            fieldset 开始写表格正文部分   #}
+            <fieldset class="form-group">
+                <legend class="border-bottom mk-4">创建客户档案</legend>
+
+
+                <div class="form-group">
+                    {{ form.guest_name.label(class='form-control-label') }}
+                    {% if form.guest_name.errors %}
+                        {{ form.guest_name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.guest_name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.guest_name(class='form-control form-control-lg') }}
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.guest_code.label(class='form-control-label') }}
+                    {% if form.guest_code.errors %}
+                        {{ form.guest_code(class = "form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.guest_code.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.guest_code(class='form-control form-control-lg') }}
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    {{ form.address.label(class='form-control-label') }}
+                    {% if form.address.errors %}
+                        {{ form.address(class = "form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.address.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.address(class='form-control form-control-lg') }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit(class='btn btn-outline-info ml-2') }}
+                <a href="{{ url_for('guest') }}" class="btn btn-outline-secondary mr-1">返回</a>
+            </div>
+        </form>
+    </div>
+{% endblock %}

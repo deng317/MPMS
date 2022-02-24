@@ -1,0 +1,32 @@
+{% extends "general_layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <!--- action="" --->
+        <form method="POST" ,action="/query_guest/" novalidate>
+            {# 攻击防护 #}
+            {{ form.hidden_tag() }}
+            {#            fieldset 开始写表格正文部分   #}
+            <fieldset class="form-group">
+                <legend class="border-bottom mk-4">查询厂商信息
+                    <a class="btn btn-outline-secondary" href="{{ url_for('create_vendor') }}">创建供应商档案</a>
+                </legend>
+
+                <div class="for-group">
+                    <label class="form-control-label">公司名称</label>
+
+                    <input class="form-control" type="text" value="{{ vendor.name }}"
+                           aria-label="Disabled input example" disabled readonly>
+                    <input class="form-control" type="text" value="{{ vendor.vendor_code }}"
+                           aria-label="Disabled input example" disabled readonly>
+
+
+                </div>
+            </fieldset>
+            <div class="form-group">
+                {{ form.submit_vendor(class='btn btn-outline-info ml-2') }}
+            </div>
+        </form>
+
+
+    </div>
+{% endblock %}
